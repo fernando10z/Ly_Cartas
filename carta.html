@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Una carta para ti</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg1: #ffe3ec; --bg2: #ffc2d4;
+    --paper: #fffaf3; --ink: #4a2c2a;
+    --rose: #e0435f; --rose-dark: #b8304a;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    min-height: 100vh; display: grid; place-items: center; padding: 16px;
+    background: linear-gradient(160deg, var(--bg1), var(--bg2));
+    font-family: "Lora", Georgia, serif; color: var(--ink); overflow-x: hidden;
+  }
+
+  /* Corazones flotando de fondo */
+  .heart {
+    position: fixed; bottom: -40px; color: var(--rose); opacity: .5;
+    animation: float linear forwards; pointer-events: none; user-select: none;
+  }
+  @keyframes float { to { transform: translateY(-110vh) rotate(25deg); opacity: 0; } }
+
+  /* Sobre */
+  .envelope {
+    width: min(360px, 90vw); aspect-ratio: 3/2; position: relative; cursor: pointer;
+    background: var(--rose); border-radius: 8px; box-shadow: 0 12px 30px #b8304a55;
+    border: none; transition: transform .3s;
+  }
+  .envelope:hover { transform: scale(1.03); }
+  .envelope::before { /* solapa */
+    content: ""; position: absolute; inset: 0 0 35% 0;
+    background: var(--rose-dark); clip-path: polygon(0 0, 100% 0, 50% 100%);
+    border-radius: 8px 8px 0 0;
+  }
+  .seal {
+    position: absolute; left: 50%; top: 52%; translate: -50% -50%;
+    font-size: 2.6rem; filter: drop-shadow(0 2px 3px #0003);
+  }
+  .hint { margin-top: 18px; text-align: center; font-style: italic; opacity: .75; }
+
+  /* Carta */
+  .letter {
+    display: none; width: min(560px, 100%); padding: 40px 36px;
+    background: var(--paper); border-radius: 6px;
+    box-shadow: 0 18px 40px #4a2c2a33;
+    background-image: repeating-linear-gradient(transparent 0 31px, #e9d8c8 31px 32px);
+    animation: open .8s ease-out;
+  }
+  .letter.show { display: block; }
+  @keyframes open { from { opacity: 0; transform: translateY(40px) scale(.95); } }
+
+  .letter h1 {
+    font-family: "Dancing Script", cursive; font-size: 2.4rem;
+    color: var(--rose-dark); margin-bottom: 18px;
+  }
+  .letter p { line-height: 32px; margin-bottom: 16px; }
+  .letter .question {
+    font-family: "Dancing Script", cursive; font-size: 2rem;
+    text-align: center; color: var(--rose); margin: 26px 0 18px;
+  }
+  .sign { font-family: "Dancing Script", cursive; font-size: 1.6rem; text-align: right; }
+
+  .buttons { display: flex; gap: 16px; justify-content: center; min-height: 56px; }
+  .buttons button {
+    font: inherit; font-size: 1.1rem; padding: 12px 30px; border-radius: 999px;
+    border: 2px solid var(--rose); cursor: pointer; transition: transform .2s;
+  }
+  #yes { background: var(--rose); color: #fff; }
+  #yes:hover { transform: scale(1.1); }
+  #no { background: transparent; color: var(--rose); position: relative; }
+
+  /* Respuesta */
+  .answer { display: none; text-align: center; animation: open .8s ease-out; }
+  .answer.show { display: block; }
+  .answer h2 { font-family: "Dancing Script", cursive; font-size: 3rem; color: var(--rose-dark); }
+  .answer p { font-size: 1.2rem; margin-top: 10px; }
+  .big-heart { font-size: 5rem; animation: beat 1s infinite; display: inline-block; }
+  @keyframes beat { 50% { transform: scale(1.2); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div id="envelopeWrap">
+  <button class="envelope" id="envelope" aria-label="Abrir la carta">
+    <span class="seal">💌</span>
+  </button>
+  <p class="hint">Tengo algo que decirte… ábreme</p>
+</div>
+
+<article class="letter" id="letter">
+  <!-- Cambia el nombre aquí -->
+  <h1>Querida Ly:</h1>
+
+  <p>No sé exactamente en qué momento pasó, pero desde que llegaste, mis días tienen otro color.
+     Me descubro sonriendo cuando pienso en ti, buscando cualquier excusa para hablarte
+     y guardando cada conversación como si fuera un tesoro.</p>
+
+  <p>Me encanta tu risa, tu forma de ver el mundo y la paz que siento cuando estoy contigo.
+     No te prometo un cuento perfecto, pero sí te prometo cariño sincero, paciencia,
+     risas y estar ahí, en los días buenos y en los no tan buenos.</p>
+
+  <p>Así que, con el corazón en la mano y un poquito de nervios, quiero preguntarte algo…</p>
+
+  <p class="question">¿Quieres estar conmigo? 💕</p>
+
+  <div class="buttons">
+    <button id="yes">Sí 💖</button>
+    <button id="no">No</button>
+  </div>
+
+  <p class="sign">Con todo mi cariño,<br>Fernando</p>
+</article>
+
+<section class="answer" id="answer">
+  <span class="big-heart">❤️</span>
+  <h2>¡Sabía que dirías que sí!</h2>
+  <p>Me acabas de hacer la persona más feliz del mundo.<br>Esto recién empieza… 🥰</p>
+</section>
+
+<script>
+  const $ = id => document.getElementById(id);
+
+  function spawnHeart(size = 14 + Math.random() * 26) {
+    const h = document.createElement('span');
+    h.className = 'heart';
+    h.textContent = ['❤', '💕', '💗', '💖'][Math.floor(Math.random() * 4)];
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.fontSize = size + 'px';
+    h.style.animationDuration = 5 + Math.random() * 5 + 's';
+    document.body.appendChild(h);
+    h.addEventListener('animationend', () => h.remove());
+  }
+  setInterval(spawnHeart, 600);
+
+  $('envelope').onclick = () => {
+    $('envelopeWrap').style.display = 'none';
+    $('letter').classList.add('show');
+  };
+
+  // El "No" se escapa — ponytail: broma intencional, siempre queda el "Sí"
+  const no = $('no');
+  const dodge = () => {
+    no.style.left = (Math.random() * 240 - 120) + 'px';
+    no.style.top = (Math.random() * 120 - 60) + 'px';
+  };
+  no.addEventListener('mouseenter', dodge);
+  no.addEventListener('focus', dodge);
+  no.addEventListener('click', e => { e.preventDefault(); dodge(); });
+
+  $('yes').onclick = () => {
+    $('letter').classList.remove('show');
+    $('answer').classList.add('show');
+    for (let i = 0; i < 40; i++) setTimeout(() => spawnHeart(20 + Math.random() * 30), i * 60);
+  };
+</script>
+</body>
+</html>

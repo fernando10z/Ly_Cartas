@@ -5,84 +5,114 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Una carta para ti</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg1: #ffe3ec; --bg2: #ffc2d4;
-    --paper: #fffaf3; --ink: #4a2c2a;
-    --rose: #e0435f; --rose-dark: #b8304a;
+    --bg: #2b1d14; --bg-light: #4a3424;
+    --paper: #f1e2c4; --paper-dark: #d9bf8f; --edge: #8b5e34;
+    --ink: #3b2414; --ink-soft: #6b4a2f;
+    --wax: #8e1b1b; --wax-dark: #5e0f0f;
   }
   * { box-sizing: border-box; margin: 0; }
   body {
     min-height: 100vh; display: grid; place-items: center; padding: 16px;
-    background: linear-gradient(160deg, var(--bg1), var(--bg2));
-    font-family: "Lora", Georgia, serif; color: var(--ink); overflow-x: hidden;
+    background: radial-gradient(ellipse at center, var(--bg-light), var(--bg) 75%);
+    font-family: "IM Fell English", Georgia, serif; color: var(--ink); overflow-x: hidden;
   }
 
-  /* Corazones flotando de fondo */
+  /* Pétalos/corazones de fondo, en tinta y lacre */
   .heart {
-    position: fixed; bottom: -40px; color: var(--rose); opacity: .5;
+    position: fixed; bottom: -40px; color: var(--wax); opacity: .45;
     animation: float linear forwards; pointer-events: none; user-select: none;
   }
-  @keyframes float { to { transform: translateY(-110vh) rotate(25deg); opacity: 0; } }
+  @keyframes float { to { transform: translateY(-110vh) rotate(40deg); opacity: 0; } }
 
-  /* Sobre */
+  /* Sobre de papel kraft con sello de lacre */
   .envelope {
     width: min(360px, 90vw); aspect-ratio: 3/2; position: relative; cursor: pointer;
-    background: var(--rose); border-radius: 8px; box-shadow: 0 12px 30px #b8304a55;
-    border: none; transition: transform .3s;
+    background: linear-gradient(135deg, #c9a46c, #a87d45); border: none; border-radius: 3px;
+    box-shadow: 0 14px 30px #000a, inset 0 0 30px #6b4a2f88; transition: transform .3s;
   }
-  .envelope:hover { transform: scale(1.03); }
+  .envelope:hover { transform: rotate(-1deg) scale(1.03); }
   .envelope::before { /* solapa */
-    content: ""; position: absolute; inset: 0 0 35% 0;
-    background: var(--rose-dark); clip-path: polygon(0 0, 100% 0, 50% 100%);
-    border-radius: 8px 8px 0 0;
+    content: ""; position: absolute; inset: 0 0 38% 0;
+    background: linear-gradient(180deg, #b48a52, #9a6f3a);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    filter: drop-shadow(0 2px 2px #0005);
   }
   .seal {
-    position: absolute; left: 50%; top: 52%; translate: -50% -50%;
-    font-size: 2.6rem; filter: drop-shadow(0 2px 3px #0003);
+    position: absolute; left: 50%; top: 58%; translate: -50% -50%;
+    width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center;
+    background: radial-gradient(circle at 35% 30%, #b8302f, var(--wax) 55%, var(--wax-dark));
+    box-shadow: 0 3px 6px #0007, inset 0 0 0 5px #7a1616, inset 0 0 0 7px #a82a2a;
+    color: #e8b4a0; font-family: "Pinyon Script", cursive; font-size: 2rem;
   }
-  .hint { margin-top: 18px; text-align: center; font-style: italic; opacity: .75; }
+  .hint {
+    margin-top: 20px; text-align: center; font-style: italic;
+    color: var(--paper-dark); letter-spacing: .03em;
+  }
 
-  /* Carta */
+  /* Pergamino */
+  .parchment {
+    background:
+      radial-gradient(ellipse at 20% 15%, #fff5dc88, transparent 40%),
+      radial-gradient(ellipse at 80% 90%, #c49a5f55, transparent 45%),
+      var(--paper);
+    box-shadow: 0 20px 45px #000b, inset 0 0 60px var(--edge), inset 0 0 12px #5a3a1c;
+    border-radius: 2px;
+  }
   .letter {
-    display: none; width: min(560px, 100%); padding: 40px 36px;
-    background: var(--paper); border-radius: 6px;
-    box-shadow: 0 18px 40px #4a2c2a33;
-    background-image: repeating-linear-gradient(transparent 0 31px, #e9d8c8 31px 32px);
-    animation: open .8s ease-out;
+    display: none; width: min(580px, 100%); padding: 48px 44px; rotate: -.6deg;
+    animation: open 1s ease-out;
   }
   .letter.show { display: block; }
   @keyframes open { from { opacity: 0; transform: translateY(40px) scale(.95); } }
 
+  .date { text-align: right; font-style: italic; color: var(--ink-soft); margin-bottom: 10px; }
   .letter h1 {
-    font-family: "Dancing Script", cursive; font-size: 2.4rem;
-    color: var(--rose-dark); margin-bottom: 18px;
+    font-family: "Pinyon Script", cursive; font-weight: normal; font-size: 2.8rem;
+    color: var(--ink); margin-bottom: 16px;
   }
-  .letter p { line-height: 32px; margin-bottom: 16px; }
+  .letter p { font-size: 1.12rem; line-height: 1.75; margin-bottom: 14px; text-align: justify; }
+  .letter p.first::first-letter { /* letra capital */
+    float: left; font-family: "Pinyon Script", cursive; font-size: 4rem;
+    line-height: .8; padding: 6px 8px 0 0; color: var(--wax);
+  }
+  .ornament { text-align: center; color: var(--ink-soft); font-size: 1.4rem; letter-spacing: .6em; margin: 6px 0; }
   .letter .question {
-    font-family: "Dancing Script", cursive; font-size: 2rem;
-    text-align: center; color: var(--rose); margin: 26px 0 18px;
+    font-family: "Pinyon Script", cursive; font-size: 2.3rem;
+    text-align: center; color: var(--wax); margin: 14px 0 18px;
   }
-  .sign { font-family: "Dancing Script", cursive; font-size: 1.6rem; text-align: right; }
+  .sign { font-family: "Pinyon Script", cursive; font-size: 1.9rem; text-align: right; margin-top: 24px; }
+  .sign small { display: block; font-family: "IM Fell English", serif; font-style: italic; font-size: 1.05rem; }
 
-  .buttons { display: flex; gap: 16px; justify-content: center; min-height: 56px; }
+  .buttons { display: flex; gap: 18px; justify-content: center; min-height: 56px; }
   .buttons button {
-    font: inherit; font-size: 1.1rem; padding: 12px 30px; border-radius: 999px;
-    border: 2px solid var(--rose); cursor: pointer; transition: transform .2s;
+    font-family: "IM Fell English SC", serif; font-size: 1.2rem; letter-spacing: .08em;
+    padding: 10px 32px; cursor: pointer; transition: transform .2s; border-radius: 2px;
   }
-  #yes { background: var(--rose); color: #fff; }
-  #yes:hover { transform: scale(1.1); }
-  #no { background: transparent; color: var(--rose); position: relative; }
+  #yes {
+    background: radial-gradient(circle at 35% 30%, #b8302f, var(--wax) 60%, var(--wax-dark));
+    color: #f3d9c4; border: 1px solid var(--wax-dark); box-shadow: 0 3px 6px #0005;
+  }
+  #yes:hover { transform: scale(1.08); }
+  #no {
+    background: transparent; color: var(--ink-soft); border: 1px dashed var(--ink-soft);
+    position: relative;
+  }
 
   /* Respuesta */
-  .answer { display: none; text-align: center; animation: open .8s ease-out; }
+  .answer { display: none; text-align: center; padding: 44px 40px; width: min(480px, 100%); animation: open 1s ease-out; }
   .answer.show { display: block; }
-  .answer h2 { font-family: "Dancing Script", cursive; font-size: 3rem; color: var(--rose-dark); }
-  .answer p { font-size: 1.2rem; margin-top: 10px; }
-  .big-heart { font-size: 5rem; animation: beat 1s infinite; display: inline-block; }
-  @keyframes beat { 50% { transform: scale(1.2); } }
+  .answer h2 { font-family: "Pinyon Script", cursive; font-weight: normal; font-size: 3rem; color: var(--wax); }
+  .answer p { font-size: 1.2rem; margin-top: 10px; font-style: italic; }
+  .big-heart { font-size: 4.5rem; color: var(--wax); animation: beat 1.2s infinite; display: inline-block; }
+  @keyframes beat { 50% { transform: scale(1.15); } }
 
+  @media (max-width: 480px) {
+    .letter { padding: 36px 24px; }
+    .letter p { text-align: left; }
+  }
   @media (prefers-reduced-motion: reduce) {
     *, *::before { animation: none !important; transition: none !important; }
   }
@@ -92,16 +122,17 @@
 
 <div id="envelopeWrap">
   <button class="envelope" id="envelope" aria-label="Abrir la carta">
-    <span class="seal">💌</span>
+    <span class="seal">L</span>
   </button>
-  <p class="hint">Tengo algo que decirte… ábreme</p>
+  <p class="hint">Una carta sellada, solo para tus ojos…</p>
 </div>
 
-<article class="letter" id="letter">
+<article class="letter parchment" id="letter">
+  <p class="date">Lima, a 1 de octubre</p>
   <!-- Cambia el nombre aquí -->
   <h1>Querida Ly:</h1>
 
-  <p>No sé exactamente en qué momento pasó, pero desde que llegaste, mis días tienen otro color.
+  <p class="first">No sé exactamente en qué momento pasó, pero desde que llegaste, mis días tienen otro color.
      Me descubro sonriendo cuando pienso en ti, buscando cualquier excusa para hablarte
      y guardando cada conversación como si fuera un tesoro.</p>
 
@@ -111,36 +142,38 @@
 
   <p>Así que, con el corazón en la mano y un poquito de nervios, quiero preguntarte algo…</p>
 
-  <p class="question">¿Quieres estar conmigo? 💕</p>
+  <p class="ornament">❦ ❧ ❦</p>
+  <p class="question">¿Quieres estar conmigo?</p>
 
   <div class="buttons">
-    <button id="yes">Sí 💖</button>
+    <button id="yes">Sí</button>
     <button id="no">No</button>
   </div>
 
-  <p class="sign">Con todo mi cariño,<br>Fernando</p>
+  <p class="sign"><small>Siempre tuyo,</small>Fernando</p>
 </article>
 
-<section class="answer" id="answer">
-  <span class="big-heart">❤️</span>
+<section class="answer parchment" id="answer">
+  <span class="big-heart">❤</span>
   <h2>¡Sabía que dirías que sí!</h2>
-  <p>Me acabas de hacer la persona más feliz del mundo.<br>Esto recién empieza… 🥰</p>
+  <p>Me acabas de hacer la persona más feliz del mundo.<br>Esto recién empieza…</p>
+  <p class="ornament">❦</p>
 </section>
 
 <script>
   const $ = id => document.getElementById(id);
 
-  function spawnHeart(size = 14 + Math.random() * 26) {
+  function spawnHeart(size = 14 + Math.random() * 22) {
     const h = document.createElement('span');
     h.className = 'heart';
-    h.textContent = ['❤', '💕', '💗', '💖'][Math.floor(Math.random() * 4)];
+    h.textContent = ['❤', '❥', '❦', '❧'][Math.floor(Math.random() * 4)];
     h.style.left = Math.random() * 100 + 'vw';
     h.style.fontSize = size + 'px';
-    h.style.animationDuration = 5 + Math.random() * 5 + 's';
+    h.style.animationDuration = 6 + Math.random() * 6 + 's';
     document.body.appendChild(h);
     h.addEventListener('animationend', () => h.remove());
   }
-  setInterval(spawnHeart, 600);
+  setInterval(spawnHeart, 800);
 
   $('envelope').onclick = () => {
     $('envelopeWrap').style.display = 'none';
